@@ -3,6 +3,8 @@ lorom
 ; enable in-game savestates
 !savestates ?= 1
 
+table table.txt
+
 incsrc "defines.asm"
 
 incsrc "edits.asm"
@@ -15,7 +17,5 @@ if !savestates
 	warnpc $00FFC0
 endif
 
-org $0EF4C8
-incsrc "hud.asm"
-
-warnpc $0EFFFF
+; smb1
+incsrc "smb/smb.asm"

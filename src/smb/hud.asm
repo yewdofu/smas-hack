@@ -1,9 +1,6 @@
 @include
 
-table table.txt
-
-;smb1 code
-gameplay_hijack_smb1:
+gameplay_hijack_smb:
 		lda !menu_closing
 		bne .do_close_menu
 		lda !menu_flag
@@ -46,64 +43,25 @@ gameplay_hijack_smb1:
 		plb
 
 	.exit_frozen:
+        lda !context_index
+        cmp #$04
+        beq .smb2
 		jml $0382D4
+    .smb2:
+		jml $0D817F
+
 
 	.exit_normal:
+        lda !context_index
+        cmp #$04
+        beq .exit_normal_smb2
 		lda $0776
 		lsr
 		jml $03826D
-
-;smb2j code
-gameplay_hijack:
-		lda !menu_closing
-		bne .do_close_menu
-		lda !menu_flag
-		bne .do_menu
-
-		; check level reset (L+R)
-		lda !axlr
-		and #%00110000
-		cmp #%00110000
-		bne +
-		; die instantly
-		lda #$49
-		sta $BB
-		; fix 21 frame rule
-		lda #20
-		sta $0787
-		bra .exit_normal
-	+
-
-		; check menu open (R + start)
-		lda !axlr
-		and #%00010000
-		beq .exit_normal
-		lda !byetudlr_1f
-		and #%00010000
-		beq .exit_normal
-
-		jsr hud_menu_init
-		bra .exit_frozen
-
-	.do_close_menu:
-		dec !menu_closing
-		bra .exit_frozen
-
-	.do_menu:
-		phb
-		phk
-		plb
-		jsr hud_menu
-		plb
-
-	.exit_frozen:
-		jml $0D817F
-
-	.exit_normal:
-		lda $0776
-		lsr
-		jml $0D8118
-
+    .exit_normal_smb2:
+        lda $0776
+        lsr
+        jml $0D8118
 
 
 hud_menu_init:
