@@ -2,6 +2,15 @@
 !smb3_entry_hook = $208691
 !smb3_reset_hook = $208D2C
 !smb3_reset_code = $22E800
+!smb3_items_open_hook = $29D907
+!smb3_items_consume_hook = $29DCF4
+!smb3_items_redraw = $29DD44
+assert read3(!smb3_items_open_hook) == $8D0FA9
+assert read2(!smb3_items_open_hook+3) == $0419
+assert read3(!smb3_items_consume_hook) == $851BA9
+assert read1(!smb3_items_consume_hook+3) == $0E
+assert read3(!smb3_items_redraw) == $DB9020
+assert read3(!smb3_items_redraw+3) == $DF1D4C
 assert read3(!smb3_entry_hook) == $9C1264
 assert read2(!smb3_entry_hook+3) == $0210
 assert read3(!smb3_reset_hook) == $1206AD

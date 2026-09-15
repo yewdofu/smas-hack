@@ -39,7 +39,8 @@ def verify_output(original, patched, profile, savestates):
     allowed = bytearray(len(original))
     sizes = {"hud_tiles": 2048, "sram_header": int(savestates),
              "nmi_hook": 3 if savestates else 0, "smb1_pause_open_hook": 5,
-             "smb3_entry_hook": 5, "smb3_reset_hook": 5}
+             "smb3_entry_hook": 5, "smb3_reset_hook": 5,
+             "smb3_items_open_hook": 5, "smb3_items_consume_hook": 3}
     for game in ("smb1", "smb2j"):
         sizes.update({f"{game}_timer_tile": 1, f"{game}_lives_hook": 2,
                       f"{game}_gameplay_hook": 4, f"{game}_hud_init_hook": 5,
@@ -119,7 +120,8 @@ def main():
         asar.close()
     symbols = "\n".join(f"{name}={labels[name]:X}" for name in
                         ("gameplay_hijack_smb", "hud_menu_init", "hud_menu", "level_tick", "world_win", "level_win",
-                         "smb3_capture_entry", "smb3_check_reset", "smb3_reset_level")
+                         "smb3_capture_entry", "smb3_check_reset", "smb3_reset_level",
+                         "smb3_fill_items")
                         if name in labels)
     log = "\n".join(messages + [symbols]) + "\n"
     (run / "asar.log").write_text(log, encoding="utf-8", newline="\n")
