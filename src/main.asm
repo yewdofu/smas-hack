@@ -11,7 +11,7 @@ incsrc "edits.asm"
 incsrc "hijacks.asm"
 
 if !savestates
-	org $00E5C4
+	org !save_code
 	incsrc "save.asm"
 
 	warnpc $00FFC0

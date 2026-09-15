@@ -1,6 +1,6 @@
 @include
 
 if !savestates
-	org $0082F6
+	org !nmi_hook
 			jsr nmi_hijack
 endif

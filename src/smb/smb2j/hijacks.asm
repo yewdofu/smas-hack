@@ -1,31 +1,31 @@
 @include
 
-org $0D8114
+org !smb2j_gameplay_hook
         jml gameplay_hijack_smb
 
-org $0D8E0F
+org !smb2j_hud_init_hook
         jsl og_hud_init
         nop
 
-org $0D8849
+org !smb2j_world_win_hook
         jsl world_win
 
-org $0DD769
+org !smb2j_level_win_hook
         jsl level_win
         nop
 
-org $0DAC02
+org !smb2j_tick_hook
         jsr level_tick_hijack_smb2j
-org $0DFFF4
+org !smb2j_tick_code
 level_tick_hijack_smb2j:
         jsl level_tick
         rts
 
 warnpc $0DFFFF
 
-org $0FD99F
+org !smb2j_pause_hook
         jsr pause_check_smb2j
-org $0FFD01
+org !smb2j_pause_code
 pause_check_smb2j:
         lda !menu_closing
         ora !menu_flag

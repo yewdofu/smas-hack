@@ -2,23 +2,23 @@
 
 if !savestates
 	; 256kB sram
-	org $00FFD8
+	org !sram_header
 			db $08
 endif
 
 ; disable sram size checks
-org $008063
+org !sram_check_launcher
 		bra $18
-org $038015
+org !sram_check_smb1
 		bra $18
-org $0D800D
+org !sram_check_smb2j
 		bra $18
-org $11803C
+org !sram_check_smb2u
 		bra $18
-org $20A116
+org !sram_check_smb3
 		bra $18
 
 
 ; hud tiles
-org $0CF800
+org !hud_tiles
 		incbin "bg3tiles.bin"

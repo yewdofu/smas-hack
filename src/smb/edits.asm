@@ -1,11 +1,11 @@
 @include
 
 ; move timer 1 tile to the left
-org $039C78
+org !smb1_timer_tile
     db $79
 
 ;infinite lives
-org $03A06B
+org !smb1_lives_hook
 		bra +
-org $03A079
+org !smb1_lives_continue
 	+

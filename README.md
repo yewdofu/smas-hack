@@ -1,11 +1,17 @@
+# smas-hack
+
+## Build
+
 To be assembled using [Asar](https://github.com/RPGHacker/asar), see the Makefile.
 
-**Global Features**
+## Global Features
+
 - In-game save states for fxpak/sd2snes. Note that you should load the relevant game before loading a state
 	- `R+Select` to save
 	- `L+Select` to load
 	
-**Lost Levels Features**
+## SMB1 / Lost Levels Features
+
 - HUD menu
 	- `R+Start` to open menu
 	- `left`/`right` to navigate through the options
@@ -19,5 +25,6 @@ To be assembled using [Asar](https://github.com/RPGHacker/asar), see the Makefil
 - IGT frame counter display
 - 21 frame rule excess display when beating levels
 
-**todo**
+## TODO
+
 - add all the smb2j features to smb1 because it's really easy to do

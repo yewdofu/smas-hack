@@ -1,11 +1,11 @@
-ss:
-	cp sfc/smas_u.sfc target/smashack_ss.sfc && cd src && asar -Dsavestates=1 main.asm ../target/smashack_ss.sfc && cd -
-	
-nss:
-	cp sfc/smas_u.sfc target/smashack_emu.sfc && cd src && asar -Dsavestates=0 main.asm ../target/smashack_emu.sfc && cd -
+PYTHON ?= python
+REGION ?= jp
 
+.PHONY: all ss nss
 all: ss nss
 
-clean:
-	rm -f target/*.sfc
-	
+ss:
+	$(PYTHON) tools/build.py --region $(REGION) --savestates 1
+
+nss:
+	$(PYTHON) tools/build.py --region $(REGION) --savestates 0

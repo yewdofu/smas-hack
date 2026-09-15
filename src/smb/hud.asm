@@ -46,9 +46,9 @@ gameplay_hijack_smb:
         lda !context_index
         cmp #$04
         beq .smb2
-		jml $0382D4
+		jml !smb1_gameplay_frozen
     .smb2:
-		jml $0D817F
+		jml !smb2j_gameplay_frozen
 
 
 	.exit_normal:
@@ -57,11 +57,11 @@ gameplay_hijack_smb:
         beq .exit_normal_smb2
 		lda $0776
 		lsr
-		jml $03826D
+		jml !smb1_gameplay_continue
     .exit_normal_smb2:
         lda $0776
         lsr
-        jml $0D8118
+        jml !smb2j_gameplay_continue
 
 
 hud_menu_init:
@@ -125,7 +125,6 @@ hud_menu:
 	.check_L
 		bit #%00000010
 		beq .finish
-		sta $666666
 		lda !menu_curr_option
 		dec
 		bpl +
@@ -323,15 +322,23 @@ edit_coins:
 		sta $07DF
 		; update counter on the hud
 		phb
+		lda !context_index
+		cmp #$04
+		beq .smb2j_update
+		lda #$A2
+		jsl !smb1_coin_update
+		bra .updated
+	.smb2j_update:
 		lda #$0D
 		pha
 		plb
 		lda #$A2
 		phk
 		pea.w .jslrtsret-1
-		pea $839F-1
-		jml $0D983D
+		pea.w (!smb2j_rtl&$FFFF)-1
+		jml !smb2j_coin_update
 	.jslrtsret:
+	.updated:
 		plb
 		%coin_sfx()
 		
@@ -367,6 +374,16 @@ hex_to_dec:
 ; 075f -> world number
 ; 0760 -> sublevel number (world relative)
 warp:
+		; First unavailable world: SMB1 has 8 worlds; SMB2J has 13.
+		lda !context_index
+		cmp #$04
+		beq .lost_levels_limit
+		lda #$09
+		bra .set_limit
+	.lost_levels_limit:
+		lda #$0E
+	.set_limit:
+		sta $02
 		lda !byetudlr
 		and #%01000000
 		beq .check_inc
@@ -375,7 +392,7 @@ warp:
 		beq .check_big_dec
 		lda !menu_world
 		inc
-		cmp #$0E
+		cmp $02
 		bcc +
 		lda #$01
 	+	sta !menu_world
@@ -388,7 +405,8 @@ warp:
 		lda !menu_world
 		dec
 		bne +
-		lda #$0D
+		lda $02
+		dec
 	+	sta !menu_world
 		%edit_value_sfx()
 		bra .check_confirm
@@ -403,7 +421,7 @@ warp:
 		bcc ++
 		lda !menu_world
 		inc
-		cmp #$0E
+		cmp $02
 		bcc +
 		lda #$01
 	+	sta !menu_world
@@ -421,7 +439,8 @@ warp:
 		lda !menu_world
 		dec
 		bne +
-		lda #$0D
+		lda $02
+		dec
 	+	sta !menu_world
 		lda #$04
 	++	sta !menu_level
@@ -454,10 +473,10 @@ warp:
         lda $7FFF00
         cmp #$04
         BEQ .smb2handler
-        jsl $04C00B
+        jsl !smb1_area_init
         bra .continue
         .smb2handler:
-		    jsl $0EC34C
+		    jsl !smb2j_area_init
 		
         .continue:
 		; warp away
@@ -619,6 +638,13 @@ level_win:
 world_win:
 		jsr draw_21rule_excess
 		lda #$08
+		rtl
+
+world_win_smb1:
+		jsr draw_21rule_excess
+		; SMB1 replaces LDA #$06 / STA $07B1; SMB2J replaces two LDAs.
+		lda #$06
+		sta $07B1
 		rtl
 
 draw_21rule_excess:

@@ -2,3 +2,5 @@
 *.smc
 *.srm
 target/
+__pycache__/
+/tools/asar/

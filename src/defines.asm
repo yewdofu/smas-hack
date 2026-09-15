@@ -1,5 +1,7 @@
 @include
 
+incsrc "regions.asm"
+
 ; constants
 !load_delay = 12
 !menu_options = 3
@@ -43,7 +45,7 @@ endmacro
 %def_freeram(menu_coins, 1)
 %def_freeram(menu_world, 1)
 %def_freeram(menu_level, 1)
-%def_freeram(menu_buffer, 26)
+%def_freeram(menu_buffer, 26*2)
 
 ; misc macros
 macro draw_static_tiles()
