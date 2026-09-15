@@ -19,3 +19,6 @@ endif
 
 ; smb1
 incsrc "smb/smb.asm"
+
+; smb3
+incsrc "smb3/smb3.asm"

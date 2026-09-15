@@ -25,6 +25,13 @@ To be assembled using [Asar](https://github.com/RPGHacker/asar), see the Makefil
 - IGT frame counter display
 - 21 frame rule excess display when beating levels
 
+## SMB3 Features
+
+- press `L+R` to reset the level
+	- restore the level-entry state, including powerup, lives, coins, score, timer and frame counter
+	- restart from the beginning even after entering a subarea
+	- also works while paused
+
 ## TODO
 
 - add all the smb2j features to smb1 because it's really easy to do

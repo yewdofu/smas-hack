@@ -1,4 +1,11 @@
 @include
+!smb3_entry_hook = $20867B
+!smb3_reset_hook = $208CDB
+!smb3_reset_code = $22E800
+assert read3(!smb3_entry_hook) == $9C1264
+assert read2(!smb3_entry_hook+3) == $0210
+assert read3(!smb3_reset_hook) == $1206AD
+assert read2(!smb3_reset_hook+3) == $04C9
 !sram_header = $00FFD8
 !sram_check_launcher = $008060
 !sram_check_smb1 = $03800D
