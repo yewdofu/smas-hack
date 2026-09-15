@@ -1,4 +1,29 @@
 @include
+!smb3_native_fade_out = $29E2B6
+assert read4(!smb3_native_fade_out) == $29E26B22
+assert read4(!smb3_native_fade_out+$31) == $16A516C6
+!smb3_map_initialize = $2080E5
+assert read3(!smb3_map_initialize) == $42009C
+assert read4(!smb3_map_initialize+3) == $F01503AD
+!smb3_map_direction_hook = $238A85
+!smb3_map_tile_hook = $238E00
+!smb3_map_neighbor_hook = $238E56
+!smb3_map_neighbor_native = $238EFC
+!smb3_map_bridge_hook = $238EDE
+!smb3_map_rom_pointers = $2AE256
+!smb3_map_hand_hook = $238C09
+!smb3_map_encounter_hook = $29B91C
+!smb3_map_encounter_return = $29B953
+assert read2(!smb3_map_hand_hook) == $10D0
+assert read3(!smb3_map_encounter_hook) == $0726AE
+assert read2(!smb3_map_encounter_hook+3) == $00A9
+assert read1(!smb3_map_encounter_return) == $60
+assert read2(!smb3_map_direction_hook) == $1890
+assert read3(!smb3_map_tile_hook) == $852EB7
+assert read2(!smb3_map_tile_hook+3) == $6BB3
+assert read4(!smb3_map_neighbor_hook) == $238EFC22
+assert read2(!smb3_map_bridge_hook) == $18D0
+assert read4(!smb3_map_rom_pointers) == $E2F9E268
 !smb3_entry_hook = $208691
 !smb3_reset_hook = $208D2C
 !smb3_reset_code = $22E800

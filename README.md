@@ -27,13 +27,10 @@ To be assembled using [Asar](https://github.com/RPGHacker/asar), see the Makefil
 
 ## SMB3 Features
 
+- Unrestricted map access
 - Infinite map item stock
-	- press `X` or `Y` on the map to open the item menu
-	- all 13 item types are available; using an item does not consume it
 - press `L+R` to reset the level
-	- restore the level-entry state, including powerup, lives, coins, score, timer and frame counter
-	- restart from the beginning even after entering a subarea
-	- also works while paused
+- press `Start+Select` to exit the level
 
 ## TODO
 

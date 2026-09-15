@@ -45,6 +45,8 @@ smb3_entry_continue:
 ; Map, title, minigames and battle mode never run this hook.
 ; Entry: A/X/Y 8-bit, DP=$0000, DB=$21. Preserve the original CMP flags.
 smb3_check_reset:
+    jml smb3_check_exit
+smb3_check_reset_buttons:
     phx
     ldx $0726
     lda $F2,x

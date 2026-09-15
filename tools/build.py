@@ -41,6 +41,9 @@ def verify_output(original, patched, profile, savestates):
              "nmi_hook": 3 if savestates else 0, "smb1_pause_open_hook": 5,
              "smb3_entry_hook": 5, "smb3_reset_hook": 5,
              "smb3_items_open_hook": 5, "smb3_items_consume_hook": 3}
+    sizes.update({"smb3_map_direction_hook": 1, "smb3_map_tile_hook": 5,
+                  "smb3_map_neighbor_hook": 4, "smb3_map_bridge_hook": 2,
+                  "smb3_map_hand_hook": 1, "smb3_map_encounter_hook": 5})
     for game in ("smb1", "smb2j"):
         sizes.update({f"{game}_timer_tile": 1, f"{game}_lives_hook": 2,
                       f"{game}_gameplay_hook": 4, f"{game}_hud_init_hook": 5,
@@ -121,7 +124,8 @@ def main():
     symbols = "\n".join(f"{name}={labels[name]:X}" for name in
                         ("gameplay_hijack_smb", "hud_menu_init", "hud_menu", "level_tick", "world_win", "level_win",
                          "smb3_capture_entry", "smb3_check_reset", "smb3_reset_level",
-                         "smb3_fill_items")
+                         "smb3_fill_items", "smb3_map_course_tile", "smb3_map_neighbor",
+                         "smb3_exit_level")
                         if name in labels)
     log = "\n".join(messages + [symbols]) + "\n"
     (run / "asar.log").write_text(log, encoding="utf-8", newline="\n")
