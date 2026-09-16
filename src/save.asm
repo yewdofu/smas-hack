@@ -1,5 +1,7 @@
 @include
 
+!save_latched = $702202         ; outside the WRAM snapshot
+
 nmi_hijack:
 		sta $0000
 		lda #$0000
@@ -7,6 +9,11 @@ nmi_hijack:
 		lda !context_index
 		and #$00FF
 		tay
+		lda.l !save_latched
+		beq .buttons
+		jsr rearm_save
+		rts
+	.buttons:
 		ldx byetudlr,y
 		lda $00,x
 		and #$0020
@@ -14,11 +21,37 @@ nmi_hijack:
 		ldx axlr,y
 		lda $00,x
 		bit #$0010
-		bne save_state
+		bne .save
 		bit #$0020
 		beq .end
 		jmp load_state
+	.save:
+		lda.l !save_latched
+		bne .end
+		lda #$0001
+		sta.l !save_latched
+		jmp save_state
 		
+	.end:
+		rts
+
+rearm_save:
+		ldx #$0000
+		cpy #$0000
+		beq .poll
+		lda.l $701FF4
+		and #$00FF
+		tax
+	.poll:
+		lda $4212
+		and #$0001
+		bne .poll
+		lda $4218,x             ; input mirrors can clear during a save
+		and #$2010
+		cmp #$2010
+		beq .end
+		lda #$0000
+		sta.l !save_latched
 	.end:
 		rts
 

@@ -8,6 +8,7 @@ To be assembled using [Asar](https://github.com/RPGHacker/asar), see the Makefil
 
 - In-game save states for fxpak/sd2snes. Note that you should load the relevant game before loading a state
 	- `R+Select` to save
+	- saves once per press; release and press either button again to save another state
 	- `L+Select` to load
 	
 ## SMB1 / Lost Levels Features
